@@ -6,6 +6,31 @@
     <title>Resgul playables</title>
 </head>
 <body>
-    <h1>Test</h1>
+    <h1>Playable list</h1>
+    <ul id="fileList">
+        <!-- Сюда будут добавлены ссылки на файлы -->
+    </ul>
+
+    <script>
+        // Запрос к GitHub API для получения списка файлов в репозитории
+        fetch('https://api.github.com/repos/resgul/playables/contents/')
+            .then(response => response.json())
+            .then(data => {
+                const fileList = document.getElementById('fileList');
+                data.forEach(file => {
+                    if (file.type === 'file' && file.name.endsWith('.html')) {
+                        const fileName = file.name;
+                        const fileURL = 'https://resgul.github.io/playables/' + fileName;
+                        const listItem = document.createElement('li');
+                        const link = document.createElement('a');
+                        link.href = fileURL;
+                        link.textContent = fileName;
+                        listItem.appendChild(link);
+                        fileList.appendChild(listItem);
+                    }
+                });
+            })
+            .catch(error => console.error('Ошибка при получении списка файлов:', error));
+    </script>
 </body>
 </html>
