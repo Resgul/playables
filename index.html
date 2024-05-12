@@ -18,13 +18,13 @@
             .then(data => {
                 const fileList = document.getElementById('fileList');
                 data.forEach(file => {
-                    if (file.type === 'file' && file.name.endsWith('.html')) {
+                    if (file.type === 'file' && file.name.endsWith('.html') && !file.name.startsWith('index')) {
                         const fileName = file.name;
                         const fileURL = 'https://resgul.github.io/playables/' + fileName;
                         const listItem = document.createElement('li');
                         const link = document.createElement('a');
                         link.href = fileURL;
-                        link.textContent = fileName;
+                        link.textContent = fileName.replace('.html','');
                         listItem.appendChild(link);
                         fileList.appendChild(listItem);
                     }
